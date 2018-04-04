@@ -3,6 +3,8 @@ package player2;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import jogodavelha.App;
+
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.AMQP;
@@ -14,30 +16,14 @@ import com.rabbitmq.client.Envelope;
 public class Recv implements Runnable {
 	private final static String QUEUE_NAME2 = "hello";
 	
-	public String message;
-	public boolean messageReceived;
+	
 	public Send2 send2;
+	public App app;
 	
+	public Recv(App app) {
+		this.app = app;
+	}
 	
-	public void sendBack(String message) throws Exception {
-		send2.sendMessage(message+"a");
-	}
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public boolean isMessageReceived() {
-		return messageReceived;
-	}
-
-	public void setMessageReceived(boolean messageReceived) {
-		this.messageReceived = messageReceived;
-	}
-
 	@Override
 	public void run(){
 		// TODO Auto-generated method stub
@@ -55,19 +41,21 @@ public class Recv implements Runnable {
 		    @Override
 		      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
 		              throws IOException {
-		    		setMessage(new String(body, "UTF-8"));
-		    		setMessageReceived(true);
-		            System.out.println("Player2 -  Received Message '" + message + "'");
-		            
-		            if(isMessageReceived() == true) {
-		            	try {
-							sendBack(message);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-		            	setMessageReceived(false);
-		            }
-		          }
+			    	String message = new String(body, "UTF-8");
+		    		app.trataMensagem(message);
+		    		if(app.checaFim()) {
+		    			return;
+		    		}
+		    		
+		    		String msgEnviar = app.readJogada();
+		    		try {
+						send2.sendMessage("" + app.getResult() + msgEnviar);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		    		
+		    		app.checaFim();
+	          	}
 		    };
 		    channel.basicConsume(QUEUE_NAME2, true, consumer); 
 		}catch(IOException | TimeoutException e) {

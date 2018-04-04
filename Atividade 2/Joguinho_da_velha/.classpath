@@ -13,8 +13,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/home/avsb/Downloads/amqp-client-4.0.2.jar"/>
-	<classpathentry kind="lib" path="/home/avsb/Downloads/slf4j-api-1.7.21.jar"/>
-	<classpathentry kind="lib" path="/home/avsb/Downloads/slf4j-simple-1.7.22.jar"/>
+	<classpathentry kind="lib" path="/home/tatiana/Downloads/slf4j-simple-1.7.22.jar"/>
+	<classpathentry kind="lib" path="/home/tatiana/Downloads/amqp-client-4.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/tatiana/Downloads/slf4j-api-1.7.21.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
