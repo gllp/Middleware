@@ -37,12 +37,12 @@ public class App {
 				tabuleiro[i][j] = '.';
 			}
 		}
-		choice = choice;
-		result = -1;
+		this.choice = choice;
+		result = 3;
 	}
 	
 	public String readJogada() {
-		this.printTabuleiro();
+		printTabuleiro();
 		
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Escolha uma posição para jogar:\n1- linha (0 - 2)\n2- coluna (0 - 2)");
@@ -56,22 +56,23 @@ public class App {
 	}
 	
 	public boolean checaFim() {
-		if(getResult() != -1) {
+		if(getResult() != 3) {
+			printTabuleiro();
 			printResult();
 		}
 		
-		return getResult() != -1;
+		return getResult() != 3;
 	}
 	
 	//Trata mensagem
 	public void trataMensagem(String message) {
-		char r,i,j;
+		int r,i,j;
 		
-		r = message.charAt(0);
+		r = message.charAt(0) - '0';
 		checkResult(r);
 		
-		i = message.charAt(1);
-		j = message.charAt(2);
+		i = message.charAt(1) - '0';
+		j = message.charAt(2) - '0';
 		jogar(i,j,false);
 	}
 	

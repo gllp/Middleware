@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import jogodavelha.App;
 import player1.*;
+import player2.Send2;
 
 public class Jogo {
 	
@@ -12,8 +13,14 @@ public class Jogo {
 		System.out.println("Escolha um simbolo: X ou O");
 		String choice = reader.next(); 
 		
+		Send send = new Send();
 		App app = new App(choice.charAt(0));
-		app.readJogada();
+		String msgEnviar = app.readJogada();
+		try {
+			send.sendMessage("" + app.getResult() + msgEnviar);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		//listening all the messages
 		Thread receiver = new Thread(new Recv2(app));
