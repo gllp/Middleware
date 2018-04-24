@@ -7,15 +7,15 @@ public class MessageHeader implements Serializable{
 	private String magic;
 	private int vesion;
 	private boolean byteOrder;
-	private int messageTye;
+	private int messageType;
 	private long messageSize;
 
 	public MessageHeader(String magic, int vesion, boolean byteOrder,
-			int messageTye, long messageSize) {
+			int messageType, long messageSize) {
 		this.magic = magic;
 		this.vesion = vesion;
 		this.byteOrder = byteOrder;
-		this.messageTye = messageTye;
+		this.messageType = messageType;
 		this.messageSize = messageSize;
 	}
 	
@@ -43,12 +43,12 @@ public class MessageHeader implements Serializable{
 		this.byteOrder = byteOrder;
 	}
 	
-	public int getMessageTye() {
-		return messageTye;
+	public int getMessageType() {
+		return messageType;
 	}
 	
-	public void setMessageTye(int messageTye) {
-		this.messageTye = messageTye;
+	public void setMessageType(int messageType) {
+		this.messageType = messageType;
 	}
 	
 	public long getMessageSize() {
