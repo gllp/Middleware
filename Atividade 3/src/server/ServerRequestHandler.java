@@ -17,13 +17,8 @@ public class ServerRequestHandler {
 	private DataOutputStream outToClient;
 	private DataInputStream inFromClient;
 	
-	public ServerRequestHandler(int port) throws IOException {
+	public ServerRequestHandler(int port) {
 		this.port = port;
-		this.serverSocket = new ServerSocket(this.port);
-		this.connectionSocket = this.serverSocket.accept();
-		
-		this.inFromClient = new DataInputStream(this.connectionSocket.getInputStream());
-		this.outToClient = new DataOutputStream(this.connectionSocket.getOutputStream());
 	}
 	
 	public void send(byte[] msg) throws IOException {
@@ -31,9 +26,18 @@ public class ServerRequestHandler {
 		
 		outToClient.writeInt(sentMessageSize);
 		outToClient.write(msg, 0, sentMessageSize);
+		
+		connectionSocket.close();
+		serverSocket.close();
 	} 
 	
 	public byte[] receive() throws IOException {
+		serverSocket = new ServerSocket(port);
+		connectionSocket = serverSocket.accept();
+		
+		inFromClient = new DataInputStream(connectionSocket.getInputStream());
+		outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+		
 		receiveMessageSize = inFromClient.readInt();
 		
 		byte[] data = new byte[receiveMessageSize];
