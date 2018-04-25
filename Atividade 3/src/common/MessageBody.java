@@ -2,8 +2,8 @@ package common;
 
 import java.io.Serializable;
 
-import server.ReplyBody;
-import server.ReplyHeader;
+import calculator.ReplyBody;
+import calculator.ReplyHeader;
 import client.RequestBody;
 import client.RequestHeader;
 

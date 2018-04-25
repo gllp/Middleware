@@ -1,4 +1,4 @@
-package server;
+package calculator;
 
 public interface ICalculator {
 	public float add(float a, float b) throws Throwable;

@@ -1,4 +1,4 @@
-package server;
+package calculator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

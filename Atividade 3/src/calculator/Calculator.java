@@ -1,4 +1,4 @@
-package server;
+package calculator;
 
 public class Calculator {
 	public float add(float a, float b) {

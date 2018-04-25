@@ -2,7 +2,7 @@ package client;
 
 import java.util.ArrayList;
 
-import server.ICalculator;
+import calculator.ICalculator;
 import common.Termination;
 
 public class CalculatorProxy extends ClientProxy implements ICalculator{
