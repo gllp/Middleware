@@ -3,6 +3,7 @@ package client;
 import java.util.ArrayList;
 
 import common.ICalculator;
+import common.Termination;
 
 public class CalculatorProxy extends ClientProxy implements ICalculator{
 	private static final long serialVersionUID = 1L;

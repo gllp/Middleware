@@ -7,6 +7,7 @@ import common.Marshaller;
 import common.Message;
 import common.MessageBody;
 import common.MessageHeader;
+import common.Termination;
 
 public class Requestor {
 	public Termination invoke(Invocation inv) throws UnknownHostException, IOException, Throwable {
