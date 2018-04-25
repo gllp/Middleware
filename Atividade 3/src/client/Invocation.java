@@ -3,23 +3,26 @@ package client;
 import java.util.ArrayList;
 
 public class Invocation {
-	private ClientProxy clientProxy;
+	private String ipAddress;
+	private int portNumber;
 	private String operationName;
 	private ArrayList<Object> parameters;
-	
-	public Invocation(ClientProxy clientProxy, String operationName,
-			ArrayList<Object> parameters) {
-		this.clientProxy = clientProxy;
-		this.operationName = operationName;
-		this.parameters = parameters;
+	private int objectId;
+
+	public String getIpAddress() {
+		return ipAddress;
 	}
 
-	public ClientProxy getClientProxy() {
-		return clientProxy;
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
-	public void setClientProxy(ClientProxy clientProxy) {
-		this.clientProxy = clientProxy;
+	public int getPortNumber() {
+		return portNumber;
+	}
+
+	public void setPortNumber(int portNumber) {
+		this.portNumber = portNumber;
 	}
 
 	public String getOperationName() {
@@ -36,5 +39,13 @@ public class Invocation {
 
 	public void setParameters(ArrayList<Object> parameters) {
 		this.parameters = parameters;
+	}
+	
+	public int getObjectId() {
+		return objectId;
+	}
+	
+	public void setObjectId(int objectId) {
+		this.objectId = objectId;
 	}
 }

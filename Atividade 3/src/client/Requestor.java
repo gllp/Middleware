@@ -10,7 +10,7 @@ import common.MessageHeader;
 
 public class Requestor {
 	public Termination invoke(Invocation inv) throws UnknownHostException, IOException, Throwable {
-		ClientRequestHandler crh = new ClientRequestHandler(inv.getClientProxy().getHost(), inv.getClientProxy().getPort());
+		ClientRequestHandler crh = new ClientRequestHandler(inv.getIpAddress(), inv.getPortNumber());
 		Marshaller marshaller = new Marshaller();
 		Termination termination = new Termination();
 		byte[] msgMarshalled = null;
