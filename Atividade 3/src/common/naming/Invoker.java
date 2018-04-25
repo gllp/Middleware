@@ -40,7 +40,7 @@ public class Invoker {
 					msgMarshalled = marshaller.marshall(bindMsgToBeMarshalled);
 					
 					srh.send(msgMarshalled);
-					return;
+					break;
 					
 				case "lookup":
 					String serviceName = (String) msgUnmarshalled.getBody().getRequestBody().getParameters().get(0);
@@ -52,7 +52,7 @@ public class Invoker {
 					msgMarshalled = marshaller.marshall(lookupMsgToBeMarshalled);
 					
 					srh.send(msgMarshalled);
-					return;
+					break;
 					
 				case "list":
 					ter.setResult(rObj.list());
@@ -63,7 +63,7 @@ public class Invoker {
 					msgMarshalled = marshaller.marshall(listMsgToBeMarshalled);
 					
 					srh.send(msgMarshalled);
-					return;
+					break;
 			}
 		}
 	}
