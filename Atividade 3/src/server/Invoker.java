@@ -8,8 +8,6 @@ import common.MessageBody;
 import common.MessageHeader;
 import common.Termination;
 import client.ClientProxy;
-import client.RequestBody;
-import client.RequestHeader;
 
 public class Invoker {
 	public void invoke(ClientProxy clientProxy) throws IOException, Throwable {
