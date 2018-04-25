@@ -10,8 +10,7 @@ public class ClientProxy implements Serializable{
 	protected int objectId;
 	
 	public ClientProxy(){}
-	public ClientProxy(final String host, final int port) throws UnknownHostException{
-		this.host = host;
+	public ClientProxy(final int port) throws UnknownHostException{
 		this.port = port;
 	}
 	
