@@ -24,8 +24,8 @@ public class Invoker {
 			msgToBeUnmarshalled = srh.receive();
 			msgUnmarshalled = marshaller.unmarshall(msgToBeUnmarshalled);
 			
-			switch(msgUnmarshalled.getBody().getRequestHeader().getOperation()) {
-				case "add":
+			switch(msgUnmarshalled.getBody().getRequestHeader().getObjectKey()) {
+				case 7777:
 					float addP1 = (float) msgUnmarshalled.getBody().getRequestBody().getParameters().get(0);
 					float addP2 = (float) msgUnmarshalled.getBody().getRequestBody().getParameters().get(1);
 					ter.setResult(rObj.add(addP1, addP2));
@@ -38,7 +38,7 @@ public class Invoker {
 					srh.send(msgMarshalled);
 					break;
 					
-				case "sub":
+				case 7778:
 					float subP1 = (float) msgUnmarshalled.getBody().getRequestBody().getParameters().get(0);
 					float subP2 = (float) msgUnmarshalled.getBody().getRequestBody().getParameters().get(1);
 					ter.setResult(rObj.sub(subP1, subP2));

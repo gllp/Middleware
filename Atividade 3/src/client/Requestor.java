@@ -18,7 +18,7 @@ public class Requestor {
 		Message msgUnmarshalled = null;
 		byte[] msgToBeUnmarshalled = null;
 		
-		RequestHeader requestHeader = new RequestHeader("", 0, true, 0, inv.getOperationName());
+		RequestHeader requestHeader = new RequestHeader("", 0, true, inv.getObjectId(), inv.getOperationName());
 		RequestBody requestBody = new RequestBody(inv.getParameters());
 		MessageHeader messageHeader = new MessageHeader("MIOP", 0, false, 0, 0);
 		MessageBody messageBody = new MessageBody(requestHeader, requestBody, null, null);

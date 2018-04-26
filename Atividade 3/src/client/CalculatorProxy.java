@@ -20,7 +20,7 @@ public class CalculatorProxy extends ClientProxy implements ICalculator{
 		parameters.add(a);
 		parameters.add(b);
 		
-		inv.setObjectId(this.getObjectId());
+		inv.setObjectId(7777);
 		inv.setIpAddress(this.getHost());
 		inv.setPortNumber(this.getPort());
 		inv.setOperationName(methodName);
@@ -43,7 +43,7 @@ public class CalculatorProxy extends ClientProxy implements ICalculator{
 		parameters.add(a);
 		parameters.add(b);
 		
-		inv.setObjectId(this.getObjectId());
+		inv.setObjectId(7778);
 		inv.setIpAddress(this.getHost());
 		inv.setPortNumber(this.getPort());
 		inv.setOperationName(methodName);
