@@ -36,7 +36,7 @@ public class Invoker {
 					msgMarshalled = marshaller.marshall(addMsgToBeMarshalled);
 					
 					srh.send(msgMarshalled);
-					return;
+					break;
 					
 				case "sub":
 					float subP1 = (float) msgUnmarshalled.getBody().getRequestBody().getParameters().get(0);
@@ -49,7 +49,7 @@ public class Invoker {
 					msgMarshalled = marshaller.marshall(subMsgToBeMarshalled);
 					
 					srh.send(msgMarshalled);
-					return;
+					break;
 			}
 		}
 	}

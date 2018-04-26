@@ -29,6 +29,10 @@ public class ServerRequestHandler {
 		
 		connectionSocket.close();
 		serverSocket.close();
+		inFromClient.close();
+		outToClient.close();
+		
+		System.out.println("Fechou server socker");
 	} 
 	
 	public byte[] receive() throws IOException {

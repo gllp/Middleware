@@ -16,10 +16,11 @@ public class Server {
 		
 		NamingProxy  namingProxy = new NamingProxy();
 		namingProxy.setHost("localhost");
-		namingProxy.setPort(1234);
+		namingProxy.setPort(11111);
 		
 		namingProxy.bind("calculator", calculatorProxy, 1);
 		
+		System.out.println("Calculator server running");
 		invoker.invoke(calculatorProxy);
 	} 
 }

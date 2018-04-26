@@ -40,6 +40,10 @@ public class ClientRequestHandler {
 		inFromServer.readFully(data, 0, receiveMessageSize);
 		
 		clientSocket.close();
+		inFromServer.close();
+		outToServer.close();
+		
+		System.out.println("Fechou client socker");
 		
 		return data;
 	}
