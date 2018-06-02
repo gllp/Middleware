@@ -7,6 +7,8 @@ public class MessageHeader implements Serializable {
 	
 	private String destination;
 	
+	public MessageHeader(){}
+	
 	public MessageHeader(String destination) {
 		this.destination = destination;
 	}

@@ -7,6 +7,8 @@ public class RequestPacketHeader implements Serializable {
 	
 	private String operation;
 
+	public RequestPacketHeader(){}
+	
 	public RequestPacketHeader(String operation) {
 		this.operation = operation;
 	}

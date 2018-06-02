@@ -9,6 +9,8 @@ public class RequestPacketBody implements Serializable {
 	private ArrayList<Object> parameters = new ArrayList<Object>();
 	private Message message;
 	
+	public RequestPacketBody(){}
+	
 	public RequestPacketBody(ArrayList<Object> parameters, Message message) {
 		this.parameters = parameters;
 		this.message = message;

@@ -7,6 +7,8 @@ public class MessageBody implements Serializable {
 	
 	private String body;
 
+	public MessageBody(){}
+	
 	public MessageBody(String body) {
 		this.body = body;
 	}

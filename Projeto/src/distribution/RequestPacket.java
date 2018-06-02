@@ -8,6 +8,8 @@ public class RequestPacket implements Serializable {
 	private RequestPacketHeader header;
 	private RequestPacketBody body;
 	
+	public RequestPacket(){}
+	
 	public RequestPacket(RequestPacketHeader header, RequestPacketBody body) {
 		super();
 		this.header = header;
