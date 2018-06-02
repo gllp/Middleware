@@ -1,6 +1,8 @@
 package distribution;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 	static final long serialVersionUID = 1L;
 	
 	private MessageHeader header;
