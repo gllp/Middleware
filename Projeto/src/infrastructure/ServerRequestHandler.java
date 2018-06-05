@@ -5,6 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+import distribution.QueueManager;
 
 public class ServerRequestHandler {
 	private int port;
@@ -12,41 +16,48 @@ public class ServerRequestHandler {
 	private int receiveMessageSize;
 	
 	private ServerSocket serverSocket;
-	private Socket connectionSocket;
+	private List<Socket> connectionSockets = new ArrayList<>();
 	
-	private DataOutputStream outToClient;
-	private DataInputStream inFromClient;
+	private List<DataOutputStream> outToClient = new ArrayList<>();
+	private List<DataInputStream> inFromClient = new ArrayList<>();
 	
-	public ServerRequestHandler(int port) {
+	public ServerRequestHandler(int port) throws IOException {
 		this.port = port;
+		this.serverSocket = new ServerSocket(this.port);
 	}
 	
-	public void send(byte[] msg) throws IOException {
+	public void send(byte[] msg, int connId) throws IOException {
 		sentMessageSize = msg.length;
 		
-		outToClient.writeInt(sentMessageSize);
-		outToClient.write(msg, 0, sentMessageSize);
+		outToClient.get(connId).writeInt(sentMessageSize);
+		outToClient.get(connId).write(msg, 0, sentMessageSize);
 		
-		connectionSocket.close();
-		serverSocket.close();
-		inFromClient.close();
-		outToClient.close();
+		connectionSockets.get(connId).close();
+		inFromClient.get(connId).close();
+		outToClient.get(connId).close();
 		
-		System.out.println("Fechou server socker");
+		System.out.println("Closed connection " + connId);
 	} 
 	
-	public byte[] receive() throws IOException {
-		serverSocket = new ServerSocket(port);
-		connectionSocket = serverSocket.accept();
-		
-		inFromClient = new DataInputStream(connectionSocket.getInputStream());
-		outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-		
-		receiveMessageSize = inFromClient.readInt();
-		
-		byte[] data = new byte[receiveMessageSize];
-		inFromClient.readFully(data, 0, receiveMessageSize);
-		
-		return data;
+	public void waitConnection() throws IOException {
+		while(true) {
+			connectionSockets.add(serverSocket.accept());
+			
+			int connId = connectionSockets.size() - 1;
+			
+			inFromClient.add(new DataInputStream(connectionSockets.get(connId).getInputStream()));
+			outToClient.add(new DataOutputStream(connectionSockets.get(connId).getOutputStream()));
+			
+			receiveMessageSize = inFromClient.get(connId).readInt();
+			
+			byte[] data = new byte[receiveMessageSize];
+			inFromClient.get(connId).readFully(data, 0, receiveMessageSize);
+			
+			new Thread(new QueueManager(
+				connectionSockets.get(connId).getRemoteSocketAddress().toString(), 
+				connectionSockets.get(connId).getPort(), 
+				connId, 
+				data)).start();
+		}
 	}
 }

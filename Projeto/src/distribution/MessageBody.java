@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class MessageBody implements Serializable {
 	static final long serialVersionUID = 1L;
 	
-	private String body;
+	private Object body;
 
 	public MessageBody(){}
 	
-	public MessageBody(String body) {
+	public MessageBody(Object body) {
 		this.body = body;
 	}
 
-	public String getBody() {
+	public Object getBody() {
 		return body;
 	}
 
-	public void setBody(String body) {
+	public void setBody(Object body) {
 		this.body = body;
 	}
 }
