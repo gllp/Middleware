@@ -24,6 +24,7 @@ public class ServerRequestHandlerQueueManager {
 		serverSocket = new ServerSocket(port);
 		
 		while(true) {
+			System.out.println("Waiting connection");
 			connectionSocket = serverSocket.accept();
 			
 			inFromClient = new DataInputStream(connectionSocket.getInputStream());
@@ -34,8 +35,7 @@ public class ServerRequestHandlerQueueManager {
 			inFromClient.readFully(data, 0, receiveMessageSize);
 			
 			new Thread(new QueueManager(
-				connectionSocket.getRemoteSocketAddress().toString(), 
-				connectionSocket.getPort(),
+				connectionSocket.getInetAddress().getHostAddress(),
 				data)).start();
 			
 			inFromClient.close();

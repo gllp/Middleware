@@ -11,7 +11,7 @@ public class Server {
 		while(true) {
 			proxy.send("lala");
 			
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		}
 	}
 }

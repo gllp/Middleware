@@ -42,6 +42,8 @@ public class QueueManagerProxy implements IQueueManager {
 		
 		byte[] response = srh.receive();
 		
+		srh.closeConnection();
+		
 		return marshaller.unmarshall(response);
 	}
 	

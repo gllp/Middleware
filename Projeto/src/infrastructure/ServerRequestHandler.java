@@ -21,6 +21,7 @@ public class ServerRequestHandler {
 	public void closeConnection() throws IOException {
 		inFromClient.close();
 		connectionSocket.close();
+		serverSocket.close();
 	}
 	
 	public byte[] receive() throws IOException {

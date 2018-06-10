@@ -9,16 +9,15 @@ import java.util.Map;
 
 public class QueueManager implements Runnable {
 	private String host;
-	private int port;
+	private int port = 33333;
 	private byte[] data;
 	private static final Object queuesLock = new Object();
 	private static final Object subscriptionsLock = new Object();
 	static Map<String, Queue> queues = new HashMap<String, Queue>();
 	static Map<String, ArrayList<Address>> subscriptions = new HashMap<String, ArrayList<Address>>();
 	
-	public QueueManager(String host, int port, byte[] data) {
+	public QueueManager(String host, byte[] data) {
 		this.host = host;
-		this.port = port;
 		this.data = data;
 	}
 
@@ -26,23 +25,25 @@ public class QueueManager implements Runnable {
 		String queueName = msg.getHeader().getDestination();
 		
 		synchronized(queuesLock) {
-			if(queues.get(queueName) == null) {
-				queues.put(queueName, new Queue());
-			}
-			
-			queues.get(queueName).enqueue(msg);
-			
-			Marshaller marshaller = new Marshaller();
-			
 			synchronized(subscriptionsLock) {
+				if(queues.get(queueName) == null) {
+					System.out.println("Creating queue " + queueName);
+					queues.put(queueName, new Queue());
+					subscriptions.put(queueName, new ArrayList<>());
+				}
+				
+				queues.get(queueName).enqueue(msg);
+				
+				Marshaller marshaller = new Marshaller();
+				
 				ArrayList<Address> addresses = subscriptions.get(queueName);
 				for(int i = 0; i < addresses.size(); i++){
 					ClientRequestHandler crh = new ClientRequestHandler(addresses.get(i).getIp(), addresses.get(i).getPort(), false);
 					
 					crh.send(marshaller.marshall(msg));
 				}
+				queues.get(queueName).dequeue();
 			}
-			queues.get(queueName).dequeue();
 		}
 	}
 	
@@ -51,12 +52,14 @@ public class QueueManager implements Runnable {
 		String queueName = msg.getHeader().getDestination();
 		
 		synchronized(subscriptionsLock) {
+			System.out.println("Subscribing " + queueName);
 			if(subscriptions.get(queueName) == null) {
 				System.out.println("Queue doesn't exist");
 				return;
 			}
 		
 			if(!subscriptions.get(queueName).contains(address)) {
+				System.out.println("Adding " + address.getIp() + " " + address.getPort() + " to queue " + queueName);
 				subscriptions.get(queueName).add(address);			
 			}
 		}
@@ -72,7 +75,7 @@ public class QueueManager implements Runnable {
 			e.printStackTrace();
 			return;
 		}
-		
+		System.out.println("Running " + msgUnmarshalled.getHeader().getOperation());
 		switch(msgUnmarshalled.getHeader().getOperation()) {
 			case "publish":
 				try {
