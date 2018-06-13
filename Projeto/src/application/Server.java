@@ -15,6 +15,5 @@ public class Server {
 		
 		app.join();
 		rcv.join();
-		System.out.println("lala");
 	}
 }

@@ -1,7 +1,11 @@
 package application;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import distribution.Action;
+import distribution.Data;
 import distribution.QueueManagerProxy;
 
 public class App implements Runnable {
@@ -12,6 +16,12 @@ public class App implements Runnable {
 		this.host = host;
 		this.port = port;
 	}
+	
+	public void sendAction(String queueName, Action action) throws IOException, InterruptedException {
+		QueueManagerProxy proxy = new QueueManagerProxy("localhost", 1313, queueName);
+		proxy.send((Object) action);
+		System.out.println("Sent action");
+	}
 
 	public void run() {
 		boolean exit = false;
@@ -19,7 +29,7 @@ public class App implements Runnable {
 		Scanner reader = new Scanner(System.in);
 		
 		while(!exit) {
-			System.out.println("Menu:\n1-Subscribe to queue\n2-See data\n3-Exit");
+			System.out.println("Menu:\n1-Subscribe to queue\n2-See data\n3-Send action to actuator\n4-Exit");
 			
 			int option = reader.nextInt();
 			
@@ -40,10 +50,33 @@ public class App implements Runnable {
 					break;
 					
 				case 2:
-					System.out.println(db.getData());
+					System.out.println("Data type:");
+					String dataType = reader.next();
+					
+					ArrayList<Data> list = db.getData(dataType);
+					for(int i = 0; i < list.size(); i++) {
+						System.out.println(list.get(i).getTime());
+					}
+					break;
+					
+				case 3:
+					System.out.println("Queue name:");
+					String queue = reader.next();
+					System.out.println("Action:");
+					String action = reader.next();
+					System.out.println("Value:");
+					String value = reader.next();
+					
+					try {
+						sendAction(queue, new Action(action, value));
+					} catch (IOException | InterruptedException e) {
+						System.out.println("Failed to send action");
+						e.printStackTrace();
+						return;
+					}
 					break;
 				
-				case 3:
+				case 4:
 					exit = true;
 					break;
 			}

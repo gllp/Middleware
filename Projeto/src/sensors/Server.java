@@ -1,17 +1,11 @@
 package sensors;
 
-import java.io.IOException;
-
-import distribution.QueueManagerProxy;
-
 public class Server {
-	public static void main(String[] args) throws InterruptedException, IOException {
-		QueueManagerProxy proxy = new QueueManagerProxy("localhost", 1313, "temperature");
+	public static void main(String[] args) {
+		int sensorsQty = 2;
 		
-		while(true) {
-			proxy.send("lala");
-			
-			Thread.sleep(5000);
+		for(int i = 0; i < sensorsQty; i++) {
+			new Thread(new Sensor("sensor"+i)).start();
 		}
 	}
 }

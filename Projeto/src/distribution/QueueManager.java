@@ -21,7 +21,7 @@ public class QueueManager implements Runnable {
 		this.data = data;
 	}
 
-	public synchronized void publish(Message msg) throws IOException, InterruptedException{
+	public void publish(Message msg) throws IOException, InterruptedException{
 		String queueName = msg.getHeader().getDestination();
 		
 		synchronized(queuesLock) {
@@ -47,7 +47,7 @@ public class QueueManager implements Runnable {
 		}
 	}
 	
-	public synchronized void subscribe(Message msg) {
+	public void subscribe(Message msg) {
 		Address address = new Address(this.host, this.port);
 		String queueName = msg.getHeader().getDestination();
 		
