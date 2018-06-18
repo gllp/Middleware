@@ -27,6 +27,15 @@ public class App implements Runnable {
 	}
 
 	public void run() {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("outputs.txt", "UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.out.println("Failed to write output file");
+			e.printStackTrace();
+			return;
+		}
+		
 		boolean exit = false;
 		DatabaseMock db = new DatabaseMock();
 		Scanner reader = new Scanner(System.in);
@@ -56,21 +65,14 @@ public class App implements Runnable {
 					System.out.println("Data type:");
 					String dataType = reader.next();
 					
-					PrintWriter writer;
-					try {
-						writer = new PrintWriter("outputs.txt", "UTF-8");
-					} catch (FileNotFoundException | UnsupportedEncodingException e) {
-						System.out.println("Failed to write output file");
-						e.printStackTrace();
-						return;
-					}
-					
+					writer.println(dataType);
 					ArrayList<Data> list = db.getData(dataType);
+					System.out.println("Tamanho lista " + list.size());
 					for(int i = 0; i < list.size(); i++) {
-						writer.println(dataType);
 						ArrayList<Long> times = list.get(i).getTime();
+						System.out.println("Tamanho times " + times.size());
 						for(int j = 1; j < times.size(); j++) {
-							writer.println(times.get(i) - times.get(i-1));
+							writer.println(times.get(j) - times.get(j-1));
 						}
 					}
 					break;
@@ -98,6 +100,7 @@ public class App implements Runnable {
 			}
 		}
 		
+		writer.close();
 		reader.close();
 	}
 }

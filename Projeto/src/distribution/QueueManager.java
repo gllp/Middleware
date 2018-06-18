@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class QueueManager implements Runnable {
 	private String host;
-	private int port = 33333;
+	private int port = 8080;
 	private byte[] data;
 	private static final Object queuesLock = new Object();
 	private static final Object subscriptionsLock = new Object();

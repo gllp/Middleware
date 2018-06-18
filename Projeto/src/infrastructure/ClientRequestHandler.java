@@ -52,7 +52,7 @@ public class ClientRequestHandler {
 		inFromServer.close();
 		outToServer.close();
 		
-		System.out.println("Fechou client socker");
+		System.out.println("Fechou client socket");
 		
 		return data;
 	}
