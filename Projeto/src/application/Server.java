@@ -3,7 +3,7 @@ package application;
 public class Server {
 	
 	public static void main(String[] args) throws InterruptedException {
-		String hostQueueServer = "localhost";
+		String hostQueueServer = "192.168.43.225";
 		int portQueueServer = 1313;
 		int port = 8080;
 		
