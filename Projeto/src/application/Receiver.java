@@ -28,7 +28,7 @@ public class Receiver implements Runnable {
 			}
 			
 			Data dataRcvd = (Data) msgUnmarshalled.getBody().getBody();
-			dataRcvd.setTime(System.currentTimeMillis() - dataRcvd.getTime());
+			dataRcvd.addTime();
 			db.add(dataRcvd);
 		}
 	}

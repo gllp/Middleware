@@ -25,25 +25,32 @@ public class QueueManager implements Runnable {
 		String queueName = msg.getHeader().getDestination();
 		
 		synchronized(queuesLock) {
-			synchronized(subscriptionsLock) {
-				if(queues.get(queueName) == null) {
-					System.out.println("Creating queue " + queueName);
-					queues.put(queueName, new Queue());
+			if(queues.get(queueName) == null) {
+				System.out.println("Creating queue " + queueName);
+				queues.put(queueName, new Queue());
+				synchronized(subscriptionsLock) {
 					subscriptions.put(queueName, new ArrayList<>());
 				}
-				
-				queues.get(queueName).enqueue(msg);
-				
-				Marshaller marshaller = new Marshaller();
-				
-				ArrayList<Address> addresses = subscriptions.get(queueName);
-				for(int i = 0; i < addresses.size(); i++){
-					ClientRequestHandler crh = new ClientRequestHandler(addresses.get(i).getIp(), addresses.get(i).getPort(), false);
-					
-					crh.send(marshaller.marshall(msg));
-				}
-				queues.get(queueName).dequeue();
 			}
+			
+			Data dataRcvd = (Data) msg.getBody().getBody();
+			dataRcvd.addTime();
+			msg.getBody().setBody((Object) dataRcvd);
+			queues.get(queueName).enqueue(msg);
+		}
+			
+		Marshaller marshaller = new Marshaller();
+		synchronized(subscriptionsLock) {
+			ArrayList<Address> addresses = subscriptions.get(queueName);
+			for(int i = 0; i < addresses.size(); i++){
+				ClientRequestHandler crh = new ClientRequestHandler(addresses.get(i).getIp(), addresses.get(i).getPort(), false);
+				
+				crh.send(marshaller.marshall(msg));
+			}
+		}
+		
+		synchronized(queuesLock) {
+			queues.get(queueName).dequeue(msg);
 		}
 	}
 	

@@ -1,9 +1,10 @@
 package distribution;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Queue {
-	private ArrayList<Message> queue =  new ArrayList<Message>();
+	private Set<Message> queue =  new HashSet<Message>();
 	
 	public Queue() {
 
@@ -13,8 +14,8 @@ public class Queue {
 		queue.add(msg);
 	}
 	
-	public Message dequeue() {
-		return queue.remove(queue.size()-1);
+	public void dequeue(Message msg) {
+		queue.remove(msg);
 	}
 	
 	public int queueSize() {

@@ -1,6 +1,9 @@
 package application;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -53,9 +56,22 @@ public class App implements Runnable {
 					System.out.println("Data type:");
 					String dataType = reader.next();
 					
+					PrintWriter writer;
+					try {
+						writer = new PrintWriter("outputs.txt", "UTF-8");
+					} catch (FileNotFoundException | UnsupportedEncodingException e) {
+						System.out.println("Failed to write output file");
+						e.printStackTrace();
+						return;
+					}
+					
 					ArrayList<Data> list = db.getData(dataType);
 					for(int i = 0; i < list.size(); i++) {
-						System.out.println(list.get(i).getTime());
+						writer.println(dataType);
+						ArrayList<Long> times = list.get(i).getTime();
+						for(int j = 1; j < times.size(); j++) {
+							writer.println(times.get(i) - times.get(i-1));
+						}
 					}
 					break;
 					

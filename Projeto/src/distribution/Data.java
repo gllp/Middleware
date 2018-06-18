@@ -1,25 +1,27 @@
 package distribution;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Data implements Serializable {
 	static final long serialVersionUID = 1L;
 	private String type;
 	private String dataInfo;
-	private long time;
+	private ArrayList<Long> time;
 	
 	public Data(String type, String dataInfo) {
 		this.type = type;
 		this.dataInfo = dataInfo;
-		this.time = System.currentTimeMillis();
+		this.time = new ArrayList<>();
+		this.time.add(System.currentTimeMillis());
 	}
 
-	public long getTime() {
+	public ArrayList<Long> getTime() {
 		return time;
 	}
 
-	public void setTime(long time) {
-		this.time = time;
+	public void addTime() {
+		this.time.add(System.currentTimeMillis());
 	}
 
 	public String getType() {
